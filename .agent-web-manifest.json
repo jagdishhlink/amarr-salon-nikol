@@ -1,0 +1,15 @@
+{
+  "business": "Amarr Salon Nikol",
+  "industry": "salon",
+  "filesGenerated": 15,
+  "imagesDownloaded": 10,
+  "imageSourceBreakdown": {
+    "business": 0,
+    "stock": 10,
+    "placeholder": 0
+  },
+  "websiteMode": "new",
+  "stage": "verification",
+  "verificationAttempts": 1,
+  "generatedAt": "2026-06-04T13:06:04.225Z"
+}
