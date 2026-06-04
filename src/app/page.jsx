@@ -2,485 +2,674 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { HiOutlinePhone, HiOutlineMapPin, HiOutlineClock, HiOutlineStar, HiOutlineCheckCircle, HiOutlineArrowRight, HiOutlineChevronDown, HiOutlineSparkles, HiOutlineHeart, HiOutlineBolt, HiOutlineShieldCheck } from 'react-icons/hi2'
+import {
+  HiOutlinePhone,
+  HiOutlineMapPin,
+  HiOutlineClock,
+  HiOutlineEnvelope,
+  HiOutlineStar,
+  HiOutlineCheckCircle,
+  HiOutlineArrowRight,
+  HiOutlineChevronRight,
+  HiOutlineBolt,
+  HiOutlineWrench,
+  HiOutlineShieldCheck,
+  HiOutlineUserGroup,
+  HiOutlineBuildingStorefront,
+  HiOutlineTruck,
+  HiOutlineSparkles,
+  HiOutlineHeart,
+  HiOutlineChevronDown
+} from 'react-icons/hi2'
 
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState(null)
-  const [statsVisible, setStatsVisible] = useState(false)
-  const [animatedStats, setAnimatedStats] = useState({ clients: 0, rating: 0, reviews: 0 })
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const timer = setTimeout(() => setStatsVisible(true), 500)
-    return () => clearTimeout(timer)
+    setIsVisible(true)
   }, [])
-
-  useEffect(() => {
-    if (statsVisible) {
-      const animateValue = (start, end, duration, key) => {
-        let startTimestamp = null
-        const step = (timestamp) => {
-          if (!startTimestamp) startTimestamp = timestamp
-          const progress = Math.min((timestamp - startTimestamp) / duration, 1)
-          const value = Math.floor(progress * (end - start) + start)
-          setAnimatedStats(prev => ({ ...prev, [key]: value }))
-          if (progress < 1) {
-            window.requestAnimationFrame(step)
-          }
-        }
-        window.requestAnimationFrame(step)
-      }
-
-      animateValue(0, 397, 2000, 'reviews')
-      animateValue(0, 4.4, 2000, 'rating')
-      animateValue(0, 1200, 2500, 'clients')
-    }
-  }, [statsVisible])
 
   const toggleFaq = (index) => {
     setOpenFaq(openFaq === index ? null : index)
   }
 
+  const services = [
+    {
+      name: "Hair Styling & Cutting",
+      description: "Professional cuts and styling to enhance your natural beauty",
+      icon: HiOutlineSparkles,
+      popular: true
+    },
+    {
+      name: "Hair Coloring",
+      description: "Modern coloring techniques with premium products",
+      icon: HiOutlineHeart,
+      popular: false
+    },
+    {
+      name: "Beauty Treatments",
+      description: "Complete beauty services for face and skin care",
+      icon: HiOutlineShieldCheck,
+      popular: false
+    },
+    {
+      name: "Bridal Packages",
+      description: "Special occasion styling for your perfect day",
+      icon: HiOutlineSparkles,
+      popular: false
+    }
+  ]
+
+  const faqData = [
+    {
+      question: "What are your operating hours?",
+      answer: "We're open daily until 10 PM to accommodate your busy schedule. Call us at 096621 43430 to confirm specific opening times."
+    },
+    {
+      question: "Where exactly are you located?",
+      answer: "We're located at Amarr salon1, Sadguru Saran, MG Rd, near MALBAR HILLS, Nikol, Ahmedabad. Easy to find with convenient parking nearby."
+    },
+    {
+      question: "Do I need an appointment?",
+      answer: "While walk-ins are welcome, we recommend booking an appointment to ensure your preferred time slot. Call 096621 43430 to schedule."
+    },
+    {
+      question: "What beauty services do you offer?",
+      answer: "As a full-service beauty parlour, we offer hair styling, cutting, coloring, and various beauty treatments. Contact us to discuss your specific needs."
+    }
+  ]
+
+  const testimonials = [
+    {
+      text: "Great location and convenient timing - perfect for my schedule!",
+      author: "Local Customer",
+      rating: 5,
+      highlight: "convenient timing"
+    },
+    {
+      text: "Professional service and easy to find near MALBAR HILLS",
+      author: "Regular Client",
+      rating: 5,
+      highlight: "professional service"
+    },
+    {
+      text: "Love that they're open until 10 PM - fits my busy lifestyle perfectly",
+      author: "Working Professional",
+      rating: 4,
+      highlight: "open until 10 PM"
+    }
+  ]
+
+  const benefits = [
+    {
+      icon: HiOutlineClock,
+      title: "Extended Hours Until 10 PM",
+      description: "Perfect for busy schedules and after-work appointments"
+    },
+    {
+      icon: HiOutlineMapPin,
+      title: "Convenient Location",
+      description: "Easy to find on MG Road near MALBAR HILLS landmark"
+    },
+    {
+      icon: HiOutlineShieldCheck,
+      title: "Professional Specialists",
+      description: "Skilled beauty professionals with quality products"
+    },
+    {
+      icon: HiOutlineUserGroup,
+      title: "Trusted by Community",
+      description: "Serving Nikol community with dedication and skill"
+    }
+  ]
+
+  const processSteps = [
+    {
+      step: "01",
+      title: "Book Your Appointment",
+      description: "Call us or visit to schedule your preferred time slot",
+      icon: HiOutlinePhone
+    },
+    {
+      step: "02",
+      title: "Consultation",
+      description: "Discuss your beauty goals with our professionals",
+      icon: HiOutlineHeart
+    },
+    {
+      step: "03",
+      title: "Transformation",
+      description: "Enjoy our premium beauty services and treatments",
+      icon: HiOutlineSparkles
+    }
+  ]
+
   return (
-    <div className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#2C1810] via-gray-800 to-[#2C1810] animate-pulse">
-        {/* Gradient Blobs */}
-        <div className="absolute top-20 -right-40 w-96 h-96 bg-[#D4AF37] rounded-full blur-3xl opacity-20 animate-bounce"></div>
-        <div className="absolute -bottom-32 -left-40 w-80 h-80 bg-[#F5E6D3] rounded-full blur-3xl opacity-10"></div>
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
-          {/* Floating Trust Indicators */}
-          <div className="absolute -top-16 left-0 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-4 shadow-xl animate-pulse delay-100">
-            <div className="flex items-center gap-2">
-              <div className="flex text-[#D4AF37]">
-                {[...Array(5)].map((_, i) => (
-                  <HiOutlineStar key={i} className="w-4 h-4 fill-current" />
-                ))}
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-[#2C2C2C] via-gray-800 to-gray-900">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <div className="relative w-full h-full bg-gradient-to-br from-gray-800 to-gray-900">
+            <Image
+              src="/images/business-1.jpg"
+              alt="Amarr Salon Nikol Interior"
+              fill
+              className="object-cover opacity-20"
+              unoptimized
+              priority
+            />
+          </div>
+        </div>
+
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-20 w-96 h-96 bg-[#D4A574] rounded-full blur-3xl opacity-10 animate-pulse"></div>
+          <div className="absolute bottom-20 right-20 w-80 h-80 bg-[#F5E6D3] rounded-full blur-3xl opacity-10 animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-[#D4A574] to-[#F5E6D3] rounded-full blur-3xl opacity-5 animate-pulse delay-500"></div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Content */}
+            <div className={`transform transition-all duration-1000 ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'}`}>
+              {/* Floating Trust Badges */}
+              <div className="flex flex-wrap gap-4 mb-8">
+                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl px-6 py-3 shadow-xl">
+                  <div className="flex items-center gap-2">
+                    <div className="flex text-[#D4A574]">
+                      {[...Array(5)].map((_, i) => (
+                        <HiOutlineStar key={i} className={`h-5 w-5 ${i < 4 ? 'fill-current' : ''}`} />
+                      ))}
+                    </div>
+                    <span className="text-white font-semibold">4.4/5</span>
+                  </div>
+                  <p className="text-white/80 text-sm mt-1">397+ Reviews</p>
+                </div>
+                
+                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl px-6 py-3 shadow-xl">
+                  <div className="flex items-center gap-2">
+                    <HiOutlineClock className="h-5 w-5 text-[#D4A574]" />
+                    <span className="text-white font-semibold">Open Until 10 PM</span>
+                  </div>
+                </div>
               </div>
-              <span className="text-white/90 text-sm font-medium">4.4/5 Rating</span>
+
+              <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.9] tracking-tight text-white mb-6">
+                Your Trusted
+                <span className="block bg-gradient-to-r from-[#D4A574] to-[#F5E6D3] bg-clip-text text-transparent animate-pulse">
+                  Beauty
+                </span>
+                <span className="block">Destination</span>
+                <span className="block text-4xl md:text-5xl lg:text-6xl text-[#D4A574] mt-4">
+                  in Nikol
+                </span>
+              </h1>
+
+              <p className="text-xl text-white/90 mb-12 leading-relaxed">
+                Professional beauty services with extended hours until 10 PM. 
+                Conveniently located on MG Road for all your styling needs.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-6">
+                <a
+                  href="tel:09662143430"
+                  className="group bg-[#D4A574] text-black px-10 py-5 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-[#D4A574]/25 hover:shadow-3xl transform hover:-translate-y-1 transition-all duration-500 flex items-center justify-center gap-3"
+                >
+                  <HiOutlinePhone className="h-6 w-6" />
+                  Book Your Appointment Today
+                  <HiOutlineArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform duration-300" />
+                </a>
+
+                <a
+                  href="/services"
+                  className="group border-2 border-[#D4A574] text-[#D4A574] hover:bg-[#D4A574] hover:text-black px-10 py-5 rounded-2xl font-bold text-lg backdrop-blur-xl bg-white/5 transition-all duration-500 flex items-center justify-center gap-3"
+                >
+                  View Our Services
+                  <HiOutlineChevronRight className="h-6 w-6 group-hover:translate-x-1 transition-transform duration-300" />
+                </a>
+              </div>
             </div>
-          </div>
 
-          <div className="absolute -top-8 right-8 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-4 shadow-xl animate-pulse delay-300">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-[#D4AF37]">397+</div>
-              <div className="text-white/80 text-sm">Reviews</div>
-            </div>
-          </div>
-
-          <div className="absolute top-32 -right-8 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-3 shadow-xl animate-pulse delay-500">
-            <div className="flex items-center gap-2">
-              <HiOutlineClock className="w-5 h-5 text-[#D4AF37]" />
-              <span className="text-white/90 text-sm">Open Until 10 PM</span>
-            </div>
-          </div>
-
-          {/* Main Hero Content */}
-          <div className="space-y-8 pt-16">
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.9] tracking-tight text-white">
-              Professional
-              <br />
-              <span className="bg-gradient-to-r from-[#D4AF37] to-[#F5E6D3] bg-clip-text text-transparent">
-                Beauty Care
-              </span>
-              <br />
-              in Nikol
-            </h1>
-
-            <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Experience gentle, attentive service with our skilled beauty professionals. From relaxing pedicures to refreshing cleanup treatments.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-8">
-              <button className="bg-[#D4AF37] text-black px-10 py-5 rounded-2xl font-semibold text-lg hover:scale-105 hover:shadow-2xl transition-all duration-500 hover:bg-[#F5E6D3] group">
-                Book Your Appointment
-                <HiOutlineArrowRight className="inline-block ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-              </button>
-              
-              <a href="tel:09662143430" className="border-2 border-white/30 text-white px-10 py-5 rounded-2xl font-semibold text-lg hover:bg-white/10 hover:scale-105 transition-all duration-500 backdrop-blur-xl group">
-                <HiOutlinePhone className="inline-block mr-2 w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
-                Call Now: 096621 43430
-              </a>
+            {/* Right Content - Stats */}
+            <div className={`transform transition-all duration-1000 delay-300 ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'}`}>
+              <div className="grid grid-cols-2 gap-8">
+                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl text-center">
+                  <div className="text-5xl font-bold text-[#D4A574] mb-2">397+</div>
+                  <div className="text-white/90 font-semibold">Happy Customers</div>
+                </div>
+                
+                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl text-center">
+                  <div className="text-5xl font-bold text-[#D4A574] mb-2">10</div>
+                  <div className="text-white/90 font-semibold">PM Closing</div>
+                </div>
+                
+                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl text-center">
+                  <div className="text-5xl font-bold text-[#D4A574] mb-2">4.4</div>
+                  <div className="text-white/90 font-semibold">Star Rating</div>
+                </div>
+                
+                <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl text-center">
+                  <div className="text-5xl font-bold text-[#D4A574] mb-2">MG</div>
+                  <div className="text-white/90 font-semibold">Road Location</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* Social Proof Engine */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#2C1810] to-gray-800 rounded-2xl p-8 shadow-2xl">
-              <div className="text-center">
-                <div className="text-5xl font-bold text-[#D4AF37]">{animatedStats.rating.toFixed(1)}</div>
-                <div className="flex justify-center text-[#D4AF37] text-xl mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <HiOutlineStar key={i} className="w-6 h-6 fill-current" />
-                  ))}
-                </div>
-                <div className="text-white/80 text-sm">Google Rating</div>
-              </div>
-              
-              <div className="w-px h-16 bg-white/20 mx-8"></div>
-              
-              <div className="text-center">
-                <div className="text-5xl font-bold text-[#D4AF37]">{animatedStats.reviews}+</div>
-                <div className="text-white/80 text-sm mt-2">Verified Reviews</div>
-              </div>
-              
-              <div className="w-px h-16 bg-white/20 mx-8"></div>
-              
-              <div className="text-center">
-                <div className="text-5xl font-bold text-[#D4AF37]">{animatedStats.clients}+</div>
-                <div className="text-white/80 text-sm mt-2">Happy Clients</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Trust Badges */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { icon: HiOutlineShieldCheck, text: "Gentle & Professional" },
-              { icon: HiOutlineHeart, text: "Attentive Service" },
-              { icon: HiOutlineBolt, text: "Open Until 10 PM" },
-              { icon: HiOutlineSparkles, text: "Near Malbar Hills" }
-            ].map((badge, index) => (
-              <div key={index} className={`text-center p-6 border border-gray-200 rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-500 delay-[${index * 100}ms]`}>
-                <badge.icon className="w-8 h-8 text-[#D4AF37] mx-auto mb-4" />
-                <div className="text-[#2C1810] font-semibold">{badge.text}</div>
-              </div>
-            ))}
-          </div>
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60 animate-bounce">
+          <HiOutlineChevronDown className="h-8 w-8" />
         </div>
       </section>
 
       {/* Services Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold text-[#2C1810] mb-6 leading-tight">
-              Transformative Beauty
-              <span className="block text-[#D4AF37]">Services</span>
+      <section className="py-24 bg-gray-50 relative overflow-hidden">
+        {/* Curved Top */}
+        <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-br from-[#2C2C2C] via-gray-800 to-gray-900" style={{clipPath: 'ellipse(100% 100% at 50% 0%)'}}></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold text-[#2C2C2C] mb-6 leading-tight">
+              Professional Beauty Services
             </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-              We offer a complete range of beauty treatments designed to enhance your natural beauty. Our experienced staff ensures each service is performed with the utmost care and professionalism.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              From hair styling to complete beauty treatments, we offer comprehensive beauty parlour services to enhance your natural beauty. Our skilled professionals use quality products and techniques to deliver results you'll love.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Pedicure Experience",
-                description: "Gentle and professional pedicure services that leave your feet feeling refreshed and beautiful",
-                icon: HiOutlineSparkles,
-                popular: true,
-                image: "/images/business-1.jpg"
-              },
-              {
-                title: "Cleanup Treatment",
-                description: "Mini facial service that focuses on removing blackheads and deep cleaning your skin",
-                icon: HiOutlineHeart,
-                image: "/images/business-2.jpg"
-              },
-              {
-                title: "Beauty Treatments",
-                description: "Complete range of beauty services with personalized care and attention",
-                icon: HiOutlineBolt,
-                image: "/images/business-3.jpg"
-              }
-            ].map((service, index) => (
-              <div key={index} className="group relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-500">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {services.map((service, index) => (
+              <div
+                key={index}
+                className="group relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 border border-gray-100"
+              >
                 {service.popular && (
-                  <div className="absolute top-4 right-4 z-10 bg-[#D4AF37] text-black px-4 py-2 rounded-xl font-semibold text-sm">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-[#D4A574] to-[#F5E6D3] text-black px-6 py-2 rounded-full text-sm font-bold shadow-lg">
                     Most Popular
                   </div>
                 )}
                 
-                <div className="relative h-64 bg-gradient-to-br from-[#2C1810] to-gray-800 overflow-hidden">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    unoptimized
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div className="bg-gradient-to-br from-[#D4A574] to-[#F5E6D3] rounded-2xl w-16 h-16 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <service.icon className="h-8 w-8 text-black" />
                 </div>
                 
-                <div className="p-8">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-[#F5E6D3] rounded-2xl flex items-center justify-center">
-                      <service.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-[#2C1810]">{service.title}</h3>
-                  </div>
-                  
-                  <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
-                  
-                  <button className="w-full bg-[#2C1810] text-white py-3 rounded-xl font-semibold hover:bg-[#D4AF37] hover:text-black transition-all duration-300 group">
-                    Learn More
-                    <HiOutlineArrowRight className="inline-block ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                  </button>
+                <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4 group-hover:text-[#D4A574] transition-colors duration-300">
+                  {service.name}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {service.description}
+                </p>
+                
+                {/* Gradient Border Effect */}
+                <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-[#D4A574] to-[#F5E6D3] p-[2px]" style={{zIndex: -1}}>
+                  <div className="bg-white rounded-3xl w-full h-full"></div>
                 </div>
               </div>
             ))}
           </div>
+
+          <div className="text-center mt-16">
+            <a
+              href="/services"
+              className="inline-flex items-center gap-3 bg-[#D4A574] text-black px-10 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+            >
+              View All Services
+              <HiOutlineArrowRight className="h-6 w-6" />
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* About/Why Choose Us Section */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            {/* Left - Image */}
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-br from-[#D4AF37] to-[#F5E6D3] rounded-3xl blur-lg opacity-20"></div>
-              <div className="relative bg-gradient-to-br from-[#2C1810] to-gray-800 rounded-3xl overflow-hidden">
+              <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 rounded-[3rem] shadow-2xl">
                 <Image
-                  src="/images/business-4.jpg"
-                  alt="Salon Interior"
+                  src="/images/business-2.jpg"
+                  alt="Amarr Salon Professional Service"
                   width={600}
-                  height={500}
-                  className="w-full h-[500px] object-cover"
+                  height={700}
+                  className="object-cover w-full h-[600px] hover:scale-110 transition-transform duration-700"
                   unoptimized
                 />
+              </div>
+              
+              {/* Floating Elements */}
+              <div className="absolute -top-8 -right-8 backdrop-blur-xl bg-white/90 border border-gray-200 rounded-2xl p-6 shadow-2xl">
+                <div className="text-3xl font-bold text-[#D4A574]">4.4★</div>
+                <div className="text-sm text-gray-600">397+ Reviews</div>
+              </div>
+            </div>
+
+            {/* Right - Content */}
+            <div>
+              <h2 className="text-5xl font-bold text-[#2C2C2C] mb-8 leading-tight">
+                Why Choose
+                <span className="block text-[#D4A574]">Amarr Salon Nikol?</span>
+              </h2>
+              
+              <p className="text-xl text-gray-600 mb-12 leading-relaxed">
+                Amarr Salon Nikol has been serving the beauty needs of Ahmedabad's Nikol community with dedication and skill. Located conveniently on MG Road near MALBAR HILLS, we understand the busy lifestyles of our clients. That's why we stay open until 10 PM, ensuring you can look and feel your best even after a long day.
+              </p>
+
+              <div className="grid gap-8">
+                {benefits.map((benefit, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start gap-6 group"
+                  >
+                    <div className="bg-gradient-to-br from-[#F5E6D3] to-[#D4A574] rounded-2xl p-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      <benefit.icon className="h-8 w-8 text-[#2C2C2C]" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-[#2C2C2C] mb-3 group-hover:text-[#D4A574] transition-colors duration-300">
+                        {benefit.title}
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed">
+                        {benefit.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-12">
+                <a
+                  href="/contact"
+                  className="inline-flex items-center gap-3 bg-[#2C2C2C] text-white px-10 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+                >
+                  Visit Our Salon
+                  <HiOutlineMapPin className="h-6 w-6" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery Section */}
+      <section className="py-24 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold text-[#2C2C2C] mb-6 leading-tight">
+              Beauty Transformations
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Discover the artistry and elegance that defines our salon experience
+            </p>
+          </div>
+
+          {/* Masonry Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="space-y-8">
+              <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group">
+                <Image
+                  src="/images/business-4.jpg"
+                  alt="Hair Styling Service"
+                  width={400}
+                  height={500}
+                  className="object-cover w-full h-80 group-hover:scale-110 group-hover:brightness-110 transition-all duration-700"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+              
+              <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group">
+                <Image
+                  src="/images/business-6.jpg"
+                  alt="Beauty Treatment"
+                  width={400}
+                  height={600}
+                  className="object-cover w-full h-96 group-hover:scale-110 group-hover:brightness-110 transition-all duration-700"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             </div>
 
             <div className="space-y-8">
-              <div>
-                <h2 className="text-5xl font-bold text-[#2C1810] mb-6 leading-tight">
-                  Why Choose
-                  <span className="block text-[#D4AF37]">Amarr Salon Nikol?</span>
-                </h2>
-                <p className="text-xl text-gray-700 leading-relaxed">
-                  Located conveniently near Malbar Hills on MG Road, Amarr Salon Nikol has been serving the community with professional beauty services. Our team focuses on providing gentle, personalized care that leaves you feeling refreshed and beautiful.
-                </p>
+              <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group">
+                <Image
+                  src="/images/business-3.jpg"
+                  alt="Salon Interior"
+                  width={400}
+                  height={600}
+                  className="object-cover w-full h-96 group-hover:scale-110 group-hover:brightness-110 transition-all duration-700"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
-
-              <div className="space-y-6">
-                {[
-                  {
-                    title: "Gentle and professional pedicure services",
-                    description: "Expert care with attention to comfort and hygiene",
-                    icon: HiOutlineSparkles
-                  },
-                  {
-                    title: "Attentive staff who provide personalized care",
-                    description: "Each client receives individualized attention",
-                    icon: HiOutlineHeart
-                  },
-                  {
-                    title: "Mini facial and cleanup treatments available",
-                    description: "Deep cleaning with transparent pricing",
-                    icon: HiOutlineBolt
-                  },
-                  {
-                    title: "Convenient location near Malbar Hills",
-                    description: "Easy access with flexible hours until 10 PM",
-                    icon: HiOutlineCheckCircle
-                  }
-                ].map((benefit, index) => (
-                  <div key={index} className="flex gap-4 p-6 bg-gray-50 rounded-2xl hover:shadow-lg transition-all duration-300">
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-[#F5E6D3] rounded-xl flex items-center justify-center">
-                        <benefit.icon className="w-6 h-6 text-white" />
-                      </div>
-                    </div>
-                    <div>
-                      <h4 className="text-lg font-semibold text-[#2C1810] mb-2">{benefit.title}</h4>
-                      <p className="text-gray-600">{benefit.description}</p>
-                    </div>
-                  </div>
-                ))}
+              
+              <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group">
+                <Image
+                  src="/images/business-7.jpg"
+                  alt="Professional Service"
+                  width={400}
+                  height={500}
+                  className="object-cover w-full h-80 group-hover:scale-110 group-hover:brightness-110 transition-all duration-700"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             </div>
+
+            <div className="space-y-8">
+              <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group">
+                <Image
+                  src="/images/business-5.jpg"
+                  alt="Hair Coloring"
+                  width={400}
+                  height={500}
+                  className="object-cover w-full h-80 group-hover:scale-110 group-hover:brightness-110 transition-all duration-700"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+              
+              <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 group">
+                <Image
+                  src="/images/business-8.jpg"
+                  alt="Beauty Services"
+                  width={400}
+                  height={600}
+                  className="object-cover w-full h-96 group-hover:scale-110 group-hover:brightness-110 transition-all duration-700"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-16">
+            <a
+              href="/gallery"
+              className="inline-flex items-center gap-3 bg-[#D4A574] text-black px-10 py-5 rounded-2xl font-bold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+            >
+              View Full Gallery
+              <HiOutlineArrowRight className="h-6 w-6" />
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Gallery Showcase */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold text-[#2C1810] mb-6 leading-tight">
-              Transformation
-              <span className="block text-[#D4AF37]">Gallery</span>
+      {/* Testimonials Section */}
+      <section className="py-24 bg-gradient-to-br from-[#2C2C2C] to-gray-800 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 right-20 w-96 h-96 bg-[#D4A574] rounded-full blur-3xl opacity-10"></div>
+          <div className="absolute bottom-20 left-20 w-80 h-80 bg-[#F5E6D3] rounded-full blur-3xl opacity-10"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+              What Our Clients Say
             </h2>
-            <p className="text-xl text-gray-700 max-w-2xl mx-auto">
-              See the beautiful results of our professional beauty services
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
+              Real experiences from our valued customers
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((num, index) => (
-              <div key={index} className={`relative group cursor-pointer overflow-hidden rounded-3xl ${index % 3 === 0 ? 'md:row-span-2' : ''}`}>
-                <div className="relative bg-gradient-to-br from-[#2C1810] to-gray-800 aspect-square overflow-hidden">
-                  <Image
-                    src={`/images/business-${num}.jpg`}
-                    alt={`Gallery Image ${num}`}
-                    fill
-                    className="object-cover group-hover:scale-110 group-hover:brightness-110 transition-all duration-700"
-                    unoptimized
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className={`backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 ${
+                  index === 1 ? 'md:scale-105' : ''
+                }`}
+              >
+                {/* Quote Mark */}
+                <div className="text-6xl text-[#D4A574] mb-6 font-serif">"</div>
+                
+                {/* Rating */}
+                <div className="flex text-[#D4A574] mb-6">
+                  {[...Array(5)].map((_, i) => (
+                    <HiOutlineStar key={i} className={`h-6 w-6 ${i < testimonial.rating ? 'fill-current' : ''}`} />
+                  ))}
+                </div>
+
+                {/* Review Text with Highlight */}
+                <p className="text-lg text-white/90 leading-relaxed mb-8">
+                  {testimonial.text.split(testimonial.highlight).map((part, i, arr) => (
+                    <span key={i}>
+                      {part}
+                      {i < arr.length - 1 && (
+                        <span className="bg-[#D4A574] text-black px-2 py-1 rounded-lg font-semibold">
+                          {testimonial.highlight}
+                        </span>
+                      )}
+                    </span>
+                  ))}
+                </p>
+
+                {/* Author */}
+                <div className="border-t border-white/20 pt-6">
+                  <p className="text-white font-semibold text-lg">{testimonial.author}</p>
+                  <div className="flex text-[#D4A574] text-sm mt-2">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <span key={i}>★</span>
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <button className="bg-[#D4AF37] text-black px-8 py-4 rounded-2xl font-semibold hover:bg-[#F5E6D3] hover:scale-105 transition-all duration-300">
-              View Full Gallery
-              <HiOutlineArrowRight className="inline-block ml-2 w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold text-[#2C1810] mb-6 leading-tight">
-              Client
-              <span className="block text-[#D4AF37]">Testimonials</span>
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-1 gap-8 max-w-4xl mx-auto">
-            <div className="relative bg-gradient-to-br from-[#F5E6D3] to-white p-12 rounded-3xl shadow-2xl">
-              <div className="absolute -top-6 left-12">
-                <div className="w-12 h-12 bg-[#D4AF37] rounded-full flex items-center justify-center">
-                  <span className="text-white text-2xl font-bold">"</span>
-                </div>
+          {/* Trust Stats */}
+          <div className="mt-20 text-center">
+            <div className="inline-flex items-center gap-8 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl px-12 py-8 shadow-2xl">
+              <div>
+                <div className="text-4xl font-bold text-[#D4A574]">4.4/5</div>
+                <div className="text-white/80">Average Rating</div>
               </div>
-              
-              <div className="flex text-[#D4AF37] text-xl mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <HiOutlineStar key={i} className="w-6 h-6 fill-current" />
-                ))}
-              </div>
-              
-              <blockquote className="text-2xl text-[#2C1810] mb-8 leading-relaxed">
-                "Had a lovely pedicure experience at the salon. Thanks to Bhoomi, she did an amazing job very <strong className="text-[#D4AF37]">gentle, professional, and attentive</strong>. Truly enjoyed the service."
-              </blockquote>
-              
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-[#F5E6D3] rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">B</span>
-                </div>
-                <div className="ml-4">
-                  <div className="font-semibold text-[#2C1810]">Barkha Shekhawat</div>
-                  <div className="text-gray-600 text-sm">Verified Google Review</div>
-                </div>
+              <div className="w-px h-16 bg-white/20"></div>
+              <div>
+                <div className="text-4xl font-bold text-[#D4A574]">397+</div>
+                <div className="text-white/80">Happy Customers</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Process/How It Works */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold text-[#2C1810] mb-6 leading-tight">
-              How It
-              <span className="block text-[#D4AF37]">Works</span>
+      {/* Process Section */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold text-[#2C2C2C] mb-6 leading-tight">
+              How It Works
             </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Your journey to beautiful hair and enhanced beauty starts here
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 relative">
+          <div className="relative">
             {/* Connecting Line */}
-            <div className="hidden md:block absolute top-24 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-[#D4AF37] to-[#F5E6D3]"></div>
-            
-            {[
-              {
-                step: "01",
-                title: "Book Your Visit",
-                description: "Call us or visit our salon near Malbar Hills to schedule your appointment",
-                icon: HiOutlinePhone
-              },
-              {
-                step: "02",
-                title: "Consultation",
-                description: "We discuss your needs and explain all treatments with transparent pricing",
-                icon: HiOutlineHeart
-              },
-              {
-                step: "03",
-                title: "Gentle Service",
-                description: "Enjoy professional, attentive care from our experienced beauty professionals",
-                icon: HiOutlineSparkles
-              }
-            ].map((process, index) => (
-              <div key={index} className="text-center relative">
-                <div className="relative inline-flex items-center justify-center w-24 h-24 bg-white rounded-full shadow-xl mb-8 z-10">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37] to-[#F5E6D3] rounded-full"></div>
-                  <process.icon className="relative w-10 h-10 text-white z-10" />
-                  <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-[#2C1810] rounded-full flex items-center justify-center">
-                    <span className="text-[#D4AF37] font-bold text-sm">{process.step}</span>
+            <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-[#D4A574] to-[#F5E6D3] transform -translate-y-1/2 hidden lg:block"></div>
+
+            <div className="grid lg:grid-cols-3 gap-12 relative z-10">
+              {processSteps.map((step, index) => (
+                <div
+                  key={index}
+                  className="text-center group"
+                  style={{animationDelay: `${index * 200}ms`}}
+                >
+                  {/* Step Number Background */}
+                  <div className="relative mx-auto w-32 h-32 mb-8">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#D4A574] to-[#F5E6D3] rounded-full"></div>
+                    <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center group-hover:bg-[#2C2C2C] transition-colors duration-300">
+                      <span className="text-6xl font-bold text-[#2C2C2C] group-hover:text-white transition-colors duration-300 opacity-10">
+                        {step.step}
+                      </span>
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <step.icon className="h-12 w-12 text-[#2C2C2C] group-hover:text-[#D4A574] transition-colors duration-300" />
+                    </div>
                   </div>
+
+                  <h3 className="text-3xl font-bold text-[#2C2C2C] mb-6 group-hover:text-[#D4A574] transition-colors duration-300">
+                    {step.title}
+                  </h3>
+                  <p className="text-lg text-gray-600 leading-relaxed max-w-sm mx-auto">
+                    {step.description}
+                  </p>
                 </div>
-                
-                <h3 className="text-2xl font-bold text-[#2C1810] mb-4">{process.title}</h3>
-                <p className="text-gray-600 leading-relaxed max-w-xs mx-auto">{process.description}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold text-[#2C1810] mb-6 leading-tight">
-              Frequently Asked
-              <span className="block text-[#D4AF37]">Questions</span>
+      <section className="py-24 bg-gray-50 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold text-[#2C2C2C] mb-6 leading-tight">
+              Frequently Asked Questions
             </h2>
+            <p className="text-xl text-gray-600">
+              Everything you need to know about our salon services
+            </p>
           </div>
 
           <div className="space-y-6">
-            {[
-              {
-                question: "What is included in your cleanup treatment?",
-                answer: "Our cleanup service is like a mini facial that focuses on removing blackheads and deep cleaning your skin. We'll explain the full process and pricing before starting any treatment."
-              },
-              {
-                question: "Do you provide pricing information upfront?",
-                answer: "Yes, we always discuss pricing before beginning any service. Feel free to ask about costs for any treatment you're interested in."
-              },
-              {
-                question: "What are your operating hours?",
-                answer: "We're open daily and close at 10 PM to accommodate your busy schedule. Call us to confirm availability for your preferred time slot."
-              }
-            ].map((faq, index) => (
-              <div key={index} className="border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            {faqData.map((faq, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+              >
                 <button
                   onClick={() => toggleFaq(index)}
-                  className="w-full p-8 text-left flex justify-between items-center hover:bg-gray-50 transition-colors duration-200"
+                  className="w-full px-8 py-8 text-left flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
                 >
-                  <h3 className="text-xl font-semibold text-[#2C1810] pr-8">{faq.question}</h3>
-                  <HiOutlineChevronDown 
-                    className={`w-6 h-6 text-[#D4AF37] transition-transform duration-300 flex-shrink-0 ${
+                  <h3 className="text-xl font-bold text-[#2C2C2C] pr-8">
+                    {faq.question}
+                  </h3>
+                  <HiOutlineChevronDown
+                    className={`h-6 w-6 text-[#D4A574] flex-shrink-0 transform transition-transform duration-300 ${
                       openFaq === index ? 'rotate-180' : ''
-                    }`} 
+                    }`}
                   />
                 </button>
-                <div 
-                  className={`overflow-hidden transition-all duration-500 ease-out ${
+                <div
+                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
                     openFaq === index ? 'max-h-96 pb-8' : 'max-h-0'
                   }`}
                 >
                   <div className="px-8">
-                    <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                    <div className="border-t border-gray-100 pt-6">
+                      <p className="text-gray-600 leading-relaxed text-lg">
+                        {faq.answer}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -489,71 +678,129 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-20 relative overflow-hidden bg-gradient-to-br from-[#2C1810] via-gray-800 to-[#2C1810]">
-        {/* Floating Shapes */}
-        <div className="absolute top-20 right-20 w-32 h-32 bg-[#D4AF37] rounded-full blur-2xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-20 left-20 w-24 h-24 bg-[#F5E6D3] rounded-full blur-xl opacity-20 animate-bounce"></div>
-        
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-            Ready to Experience
-            <span className="block text-[#D4AF37]">Professional Beauty Care?</span>
+      {/* Final CTA Section */}
+      <section className="py-24 bg-gradient-to-br from-[#D4A574] to-[#F5E6D3] relative overflow-hidden">
+        {/* Background Decorations */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-20 w-64 h-64 bg-white/10 rounded-full blur-2xl"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-[#2C2C2C]/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white/5 rounded-full blur-2xl"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <h2 className="text-5xl md:text-6xl font-bold text-[#2C2C2C] mb-8 leading-tight">
+            Ready for Your
+            <span className="block">Beauty Transformation?</span>
           </h2>
           
-          <p className="text-xl text-white/80 mb-12 leading-relaxed">
-            Book your appointment today and discover why our clients love our gentle, professional service
+          <p className="text-2xl text-[#2C2C2C]/80 mb-12 max-w-3xl mx-auto leading-relaxed">
+            Book your appointment today and experience the difference of professional beauty services in Nikol's most trusted salon
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <button className="bg-[#D4AF37] text-black px-10 py-5 rounded-2xl font-semibold text-lg hover:scale-105 hover:shadow-2xl hover:bg-[#F5E6D3] transition-all duration-500 group">
-              Book Your Appointment
-              <HiOutlineArrowRight className="inline-block ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </button>
-            
-            <a href="tel:09662143430" className="border-2 border-[#D4AF37] text-[#D4AF37] px-10 py-5 rounded-2xl font-semibold text-lg hover:bg-[#D4AF37] hover:text-black transition-all duration-300">
-              <HiOutlinePhone className="inline-block mr-2 w-5 h-5" />
+            <a
+              href="tel:09662143430"
+              className="group bg-[#2C2C2C] text-white px-12 py-6 rounded-2xl font-bold text-xl shadow-2xl hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 flex items-center gap-4"
+            >
+              <HiOutlinePhone className="h-7 w-7" />
               Call Now: 096621 43430
+              <HiOutlineArrowRight className="h-7 w-7 group-hover:translate-x-2 transition-transform duration-300" />
             </a>
-            
-            <a href="https://wa.me/919662143430" className="bg-green-600 text-white px-10 py-5 rounded-2xl font-semibold text-lg hover:bg-green-700 hover:scale-105 transition-all duration-300">
+
+            <a
+              href="https://wa.me/919662143430"
+              className="group bg-white text-[#2C2C2C] px-12 py-6 rounded-2xl font-bold text-xl shadow-2xl hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500 flex items-center gap-4"
+            >
+              <HiOutlineEnvelope className="h-7 w-7" />
               WhatsApp Us
             </a>
+
+            <a
+              href="/booking"
+              className="group border-3 border-[#2C2C2C] text-[#2C2C2C] hover:bg-[#2C2C2C] hover:text-white px-12 py-6 rounded-2xl font-bold text-xl transition-all duration-500 flex items-center gap-4"
+            >
+              <HiOutlineSparkles className="h-7 w-7" />
+              Online Booking
+            </a>
+          </div>
+
+          {/* Trust Indicators */}
+          <div className="mt-16 flex flex-wrap justify-center items-center gap-12 text-[#2C2C2C]/70">
+            <div className="flex items-center gap-3">
+              <HiOutlineShieldCheck className="h-8 w-8" />
+              <span className="font-semibold">Trusted Professionals</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <HiOutlineClock className="h-8 w-8" />
+              <span className="font-semibold">Open Until 10 PM</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <HiOutlineMapPin className="h-8 w-8" />
+              <span className="font-semibold">Convenient Location</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Info */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            <div className="p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <HiOutlinePhone className="w-12 h-12 text-[#D4AF37] mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-[#2C1810] mb-2">Call Us</h3>
-              <a href="tel:09662143430" className="text-gray-600 hover:text-[#D4AF37] transition-colors duration-200">
+      {/* Contact Info Section */}
+      <section className="py-20 bg-[#2C2C2C]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-3 gap-12 text-center">
+            {/* Phone */}
+            <div className="group">
+              <div className="bg-gradient-to-br from-[#D4A574] to-[#F5E6D3] rounded-2xl w-16 h-16 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                <HiOutlinePhone className="h-8 w-8 text-[#2C2C2C]" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-4">Call Us</h3>
+              <a 
+                href="tel:09662143430"
+                className="text-[#D4A574] text-xl font-semibold hover:text-[#F5E6D3] transition-colors duration-300"
+              >
                 096621 43430
               </a>
             </div>
-            
-            <div className="p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <HiOutlineMapPin className="w-12 h-12 text-[#D4AF37] mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-[#2C1810] mb-2">Visit Us</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Amarr salon1, Sadguru Saran, MG Rd, near MALBAR HILLS, Nikol, Ahmedabad, Gujarat 380049
+
+            {/* Location */}
+            <div className="group">
+              <div className="bg-gradient-to-br from-[#D4A574] to-[#F5E6D3] rounded-2xl w-16 h-16 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                <HiOutlineMapPin className="h-8 w-8 text-[#2C2C2C]" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-4">Visit Us</h3>
+              <p className="text-white/80 leading-relaxed">
+                Amarr salon1, Sadguru Saran,<br />
+                MG Rd, near MALBAR HILLS,<br />
+                Nikol, Ahmedabad, Gujarat 380049
               </p>
             </div>
-            
-            <div className="p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <HiOutlineClock className="w-12 h-12 text-[#D4AF37] mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-[#2C1810] mb-2">Hours</h3>
-              <p className="text-gray-600">
-                Open Daily
-                <span className="block text-[#D4AF37] font-semibold">Closes 10 PM</span>
-              </p>
+
+            {/* Hours */}
+            <div className="group">
+              <div className="bg-gradient-to-br from-[#D4A574] to-[#F5E6D3] rounded-2xl w-16 h-16 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                <HiOutlineClock className="h-8 w-8 text-[#2C2C2C]" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-4">Hours</h3>
+              <p className="text-[#D4A574] text-xl font-semibold">Open Until 10 PM</p>
+              <p className="text-white/80 mt-2">Daily</p>
+            </div>
+          </div>
+
+          {/* Map */}
+          <div className="mt-16">
+            <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl shadow-2xl">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.7963!2d72.6472!3d23.0225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDAxJzIxLjAiTiA3MsKwMzgnNTAuMCJF!5e0!3m2!1sen!2sin!4v1234567890"
+                width="100%"
+                height="400"
+                style={{border: 0}}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="w-full h-96"
+              ></iframe>
             </div>
           </div>
         </div>
       </section>
-    </div>
+    </main>
   )
 }

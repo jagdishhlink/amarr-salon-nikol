@@ -1,398 +1,408 @@
 'use client'
+
+import { useState } from 'react'
 import Image from 'next/image'
-import { HiOutlineStar, HiOutlineCheckCircle, HiOutlineSparkles, HiOutlineHeart, HiOutlineArrowRight, HiOutlineClock } from 'react-icons/hi2'
+import { HiOutlineSparkles, HiOutlineHeart, HiOutlineStar, HiOutlineCheckCircle, HiOutlineArrowRight, HiOutlineChevronRight } from 'react-icons/hi2'
 
-export default function ServicesPage() {
+export default function Services() {
+  const [selectedCategory, setSelectedCategory] = useState('all')
+
+  const serviceCategories = [
+    { id: 'all', name: 'All Services', icon: HiOutlineSparkles },
+    { id: 'hair', name: 'Hair Care', icon: HiOutlineHeart },
+    { id: 'skin', name: 'Skin Care', icon: HiOutlineStar },
+    { id: 'special', name: 'Special Occasions', icon: HiOutlineCheckCircle }
+  ]
+
+  const services = [
+    {
+      category: 'hair',
+      title: 'Hair Cutting & Styling',
+      description: 'Professional cuts and styling to enhance your natural beauty',
+      features: ['Consultation included', 'Personalized styling', 'Premium products'],
+      duration: '45-60 mins',
+      popular: true
+    },
+    {
+      category: 'hair',
+      title: 'Hair Coloring & Highlights',
+      description: 'Expert coloring services with latest techniques and quality products',
+      features: ['Color consultation', 'Patch test included', 'Touch-up guidance'],
+      duration: '90-120 mins',
+      popular: false
+    },
+    {
+      category: 'hair',
+      title: 'Hair Treatments',
+      description: 'Deep conditioning and repair treatments for healthy, lustrous hair',
+      features: ['Scalp analysis', 'Customized treatment', 'Home care advice'],
+      duration: '60-75 mins',
+      popular: true
+    },
+    {
+      category: 'skin',
+      title: 'Facial Treatments',
+      description: 'Rejuvenating facials tailored to your skin type and concerns',
+      features: ['Skin analysis', 'Deep cleansing', 'Moisturizing mask'],
+      duration: '60-90 mins',
+      popular: true
+    },
+    {
+      category: 'skin',
+      title: 'Beauty Cleanup',
+      description: 'Complete facial cleanup for fresh, glowing skin',
+      features: ['Blackhead removal', 'Toning treatment', 'Sun protection'],
+      duration: '45-60 mins',
+      popular: false
+    },
+    {
+      category: 'special',
+      title: 'Bridal Packages',
+      description: 'Complete bridal beauty services for your special day',
+      features: ['Trial session', 'Hair & makeup', 'Touch-up kit'],
+      duration: '2-3 hours',
+      popular: true
+    },
+    {
+      category: 'special',
+      title: 'Party Makeup',
+      description: 'Glamorous makeup for parties, events, and special occasions',
+      features: ['Event consultation', 'Long-lasting formula', 'Photo-ready finish'],
+      duration: '60-90 mins',
+      popular: false
+    },
+    {
+      category: 'special',
+      title: 'Traditional Styling',
+      description: 'Authentic Indian hairstyles and makeup for cultural events',
+      features: ['Cultural expertise', 'Traditional techniques', 'Authentic products'],
+      duration: '90-120 mins',
+      popular: false
+    }
+  ]
+
+  const filteredServices = selectedCategory === 'all' 
+    ? services 
+    : services.filter(service => service.category === selectedCategory)
+
+  const treatmentSteps = [
+    {
+      step: 1,
+      title: 'Consultation',
+      description: 'Personal assessment of your beauty needs and preferences'
+    },
+    {
+      step: 2,
+      title: 'Preparation',
+      description: 'Professional setup with premium products and tools'
+    },
+    {
+      step: 3,
+      title: 'Treatment',
+      description: 'Expert application of techniques tailored to you'
+    },
+    {
+      step: 4,
+      title: 'Finishing',
+      description: 'Final touches and styling guidance for lasting results'
+    }
+  ]
+
+  const whyChooseUs = [
+    {
+      title: 'Extended Hours Until 10 PM',
+      description: 'Flexible scheduling to fit your busy lifestyle',
+      icon: HiOutlineSparkles
+    },
+    {
+      title: 'Professional Expertise',
+      description: 'Skilled beauticians with years of experience',
+      icon: HiOutlineStar
+    },
+    {
+      title: 'Quality Products',
+      description: 'Premium beauty products for best results',
+      icon: HiOutlineCheckCircle
+    },
+    {
+      title: 'Convenient Location',
+      description: 'Easy to find on MG Road near MALBAR HILLS',
+      icon: HiOutlineHeart
+    }
+  ]
+
   return (
-    <div>
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#2C1810] via-gray-800 to-gray-900"></div>
-        <div className="absolute inset-0 opacity-20">
-          <div className="relative w-full h-full bg-gradient-to-br from-gray-800 to-gray-900">
-            <Image 
-              src="/images/business-2.jpg" 
-              alt="Beauty services at Amarr Salon Nikol"
-              fill
-              className="object-cover"
-              unoptimized
-            />
+      <section className="relative min-h-[70vh] flex items-center">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#2C2C2C] to-gray-800"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900">
+          <Image
+            src="/images/business-3.jpg"
+            alt="Professional beauty services"
+            fill
+            className="object-cover opacity-40"
+            unoptimized
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 text-white">
+          <div className="max-w-4xl">
+            <div className="inline-flex items-center px-4 py-2 bg-[#D4A574]/10 rounded-full border border-[#D4A574]/20 mb-8">
+              <HiOutlineSparkles className="w-5 h-5 text-[#D4A574] mr-2" />
+              <span className="text-[#D4A574] text-sm font-medium">Professional Beauty Services</span>
+            </div>
+            <h1 className="text-6xl lg:text-7xl font-bold mb-8 leading-tight">
+              Transform Your
+              <span className="block bg-gradient-to-r from-[#D4A574] to-[#F5E6D3] bg-clip-text text-transparent">
+                Natural Beauty
+              </span>
+            </h1>
+            <p className="text-xl text-gray-300 mb-12 max-w-2xl leading-relaxed">
+              From hair styling to complete beauty treatments, we offer comprehensive beauty parlour services to enhance your natural beauty. Our skilled professionals use quality products and techniques to deliver results you'll love.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button className="bg-[#D4A574] text-black px-8 py-4 rounded-2xl font-semibold hover:bg-[#F5E6D3] transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+                Book Your Appointment Today
+                <HiOutlineArrowRight className="w-5 h-5 ml-2" />
+              </button>
+              <button className="border border-white/20 text-white px-8 py-4 rounded-2xl font-medium hover:bg-white/10 transition-all duration-300">
+                Call Now: 096621 43430
+              </button>
+            </div>
           </div>
         </div>
-        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-          <div className="inline-flex items-center gap-2 bg-[#D4AF37]/20 backdrop-blur-sm rounded-full px-6 py-2 mb-8">
-            <HiOutlineSparkles className="text-[#D4AF37] text-lg" />
-            <span className="text-[#D4AF37] font-medium">Professional Beauty Services</span>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-light text-white mb-6 leading-tight">
-            Complete Range of<br />
-            <span className="text-[#D4AF37]">Beauty Treatments</span>
-          </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed">
-            We offer a complete range of beauty treatments designed to enhance your natural beauty. Our experienced staff ensures each service is performed with the utmost care and professionalism.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-[#D4AF37] text-black px-8 py-4 rounded-full font-semibold hover:bg-[#F5E6D3] transition-all duration-300 transform hover:scale-105">
-              Book Your Appointment
-            </button>
-            <button className="border-2 border-[#D4AF37] text-[#D4AF37] px-8 py-4 rounded-full font-semibold hover:bg-[#D4AF37] hover:text-black transition-all duration-300">
-              Call Now: 096621 43430
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Trust Indicators */}
-      <section className="py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#2C1810] mb-2">4.4★</div>
-              <div className="text-gray-600">Customer Rating</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#2C1810] mb-2">397+</div>
-              <div className="text-gray-600">Happy Customers</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#2C1810] mb-2">10PM</div>
-              <div className="text-gray-600">Open Until</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[#2C1810] mb-2">MG Rd</div>
-              <div className="text-gray-600">Prime Location</div>
-            </div>
-          </div>
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1200 120" className="w-full h-20 text-white">
+            <path d="M0,120 C300,60 900,180 1200,120 L1200,120 L0,120 Z" fill="currentColor" />
+          </svg>
         </div>
       </section>
 
-      {/* Featured Services Grid */}
-      <section className="py-24 bg-gray-50">
+      {/* Service Categories Filter */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-light text-[#2C1810] mb-6">Our Signature Services</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Experience gentle, attentive service with our skilled beauty professionals</p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-            {/* Pedicure Services */}
-            <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group">
-              <div className="relative h-64 bg-gradient-to-br from-gray-800 to-gray-900">
-                <Image 
-                  src="/images/business-3.jpg" 
-                  alt="Professional pedicure experience"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  unoptimized
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="bg-[#D4AF37] text-black px-3 py-1 rounded-full text-sm font-medium">Most Popular</span>
-                </div>
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-semibold text-[#2C1810] mb-4">Gentle Pedicure Experience</h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">Professional and attentive pedicure services that leave your feet feeling refreshed and beautiful. Our gentle approach ensures maximum comfort.</p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1">
-                    <HiOutlineStar className="text-[#D4AF37] text-lg" />
-                    <span className="text-[#D4AF37] font-medium">5★ Rated</span>
-                  </div>
-                  <button className="flex items-center gap-2 text-[#D4AF37] hover:gap-3 transition-all duration-300">
-                    Book Now <HiOutlineArrowRight />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Cleanup Treatment */}
-            <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group">
-              <div className="relative h-64 bg-gradient-to-br from-gray-800 to-gray-900">
-                <Image 
-                  src="/images/business-4.jpg" 
-                  alt="Mini facial cleanup treatment"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  unoptimized
-                />
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-semibold text-[#2C1810] mb-4">Cleanup Treatment</h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">Our cleanup service is like a mini facial that focuses on removing blackheads and deep cleaning your skin for a refreshed look.</p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1">
-                    <HiOutlineSparkles className="text-[#D4AF37] text-lg" />
-                    <span className="text-[#D4AF37] font-medium">Deep Clean</span>
-                  </div>
-                  <button className="flex items-center gap-2 text-[#D4AF37] hover:gap-3 transition-all duration-300">
-                    Learn More <HiOutlineArrowRight />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Mini Facial */}
-            <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group">
-              <div className="relative h-64 bg-gradient-to-br from-gray-800 to-gray-900">
-                <Image 
-                  src="/images/business-5.jpg" 
-                  alt="Refreshing mini facial treatment"
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  unoptimized
-                />
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-semibold text-[#2C1810] mb-4">Mini Facial Treatment</h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">Refreshing facial treatments that cleanse and rejuvenate your skin, leaving you with a healthy, radiant glow.</p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1">
-                    <HiOutlineHeart className="text-[#D4AF37] text-lg" />
-                    <span className="text-[#D4AF37] font-medium">Radiant Glow</span>
-                  </div>
-                  <button className="flex items-center gap-2 text-[#D4AF37] hover:gap-3 transition-all duration-300">
-                    Book Now <HiOutlineArrowRight />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Service Categories */}
-      <section className="py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
-            <div>
-              <h2 id="hair" className="text-4xl font-light text-[#2C1810] mb-8">Hair Services</h2>
-              <div className="space-y-6">
-                <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl hover:bg-[#F5E6D3]/20 transition-colors duration-300">
-                  <HiOutlineCheckCircle className="text-[#D4AF37] text-2xl mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#2C1810] mb-2">Professional Hair Styling</h3>
-                    <p className="text-gray-600">Expert cuts, styling, and treatments for all hair types with personalized attention.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl hover:bg-[#F5E6D3]/20 transition-colors duration-300">
-                  <HiOutlineCheckCircle className="text-[#D4AF37] text-2xl mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#2C1810] mb-2">Color Treatments</h3>
-                    <p className="text-gray-600">Professional coloring services to enhance your natural beauty with quality products.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl hover:bg-[#F5E6D3]/20 transition-colors duration-300">
-                  <HiOutlineCheckCircle className="text-[#D4AF37] text-2xl mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#2C1810] mb-2">Hair Care Treatments</h3>
-                    <p className="text-gray-600">Nourishing treatments to keep your hair healthy, shiny, and manageable.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="relative h-96 rounded-3xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
-                <Image 
-                  src="/images/business-6.jpg" 
-                  alt="Professional hair services at Amarr Salon"
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              </div>
-            </div>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2C2C2C] mb-6">
+              Our Beauty Services
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Discover our comprehensive range of professional beauty treatments designed to make you look and feel your best
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
-            <div className="order-2 lg:order-1">
-              <div className="relative h-96 rounded-3xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
-                <Image 
-                  src="/images/business-7.jpg" 
-                  alt="Facial treatments and cleanup services"
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              </div>
-            </div>
-            <div className="order-1 lg:order-2">
-              <h2 id="facial" className="text-4xl font-light text-[#2C1810] mb-8">Facial Treatments</h2>
-              <div className="space-y-6">
-                <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl hover:bg-[#F5E6D3]/20 transition-colors duration-300">
-                  <HiOutlineSparkles className="text-[#D4AF37] text-2xl mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#2C1810] mb-2">Deep Cleanup Treatment</h3>
-                    <p className="text-gray-600">Mini facial service focusing on blackhead removal and deep skin cleansing.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl hover:bg-[#F5E6D3]/20 transition-colors duration-300">
-                  <HiOutlineSparkles className="text-[#D4AF37] text-2xl mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#2C1810] mb-2">Refreshing Mini Facial</h3>
-                    <p className="text-gray-600">Quick rejuvenating facial to cleanse and refresh your skin for an instant glow.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl hover:bg-[#F5E6D3]/20 transition-colors duration-300">
-                  <HiOutlineSparkles className="text-[#D4AF37] text-2xl mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#2C1810] mb-2">Skin Brightening</h3>
-                    <p className="text-gray-600">Professional treatments to enhance your natural radiance and skin tone.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 id="beauty" className="text-4xl font-light text-[#2C1810] mb-8">Beauty Services</h2>
-              <div className="space-y-6">
-                <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl hover:bg-[#F5E6D3]/20 transition-colors duration-300">
-                  <HiOutlineHeart className="text-[#D4AF37] text-2xl mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#2C1810] mb-2">Gentle Pedicure</h3>
-                    <p className="text-gray-600">Professional, gentle, and attentive pedicure services for beautiful, healthy feet.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl hover:bg-[#F5E6D3]/20 transition-colors duration-300">
-                  <HiOutlineHeart className="text-[#D4AF37] text-2xl mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#2C1810] mb-2">Manicure Services</h3>
-                    <p className="text-gray-600">Complete hand care with professional manicure treatments and nail styling.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-2xl hover:bg-[#F5E6D3]/20 transition-colors duration-300">
-                  <HiOutlineHeart className="text-[#D4AF37] text-2xl mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#2C1810] mb-2">Beauty Consultations</h3>
-                    <p className="text-gray-600">Personalized beauty advice and treatment recommendations from our experts.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="relative h-96 rounded-3xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
-                <Image 
-                  src="/images/business-8.jpg" 
-                  alt="Professional beauty services and pedicures"
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Service Features */}
-      <section className="py-24 bg-[#2C1810]">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-light text-white mb-6">Why Choose Our Services</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">Experience the difference of gentle, professional, and attentive beauty care</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center p-8 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-              <div className="w-16 h-16 bg-[#D4AF37] rounded-full flex items-center justify-center mx-auto mb-6">
-                <HiOutlineHeart className="text-black text-2xl" />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-4">Gentle Approach</h3>
-              <p className="text-gray-300">Professional and gentle service that prioritizes your comfort throughout every treatment.</p>
-            </div>
-            
-            <div className="text-center p-8 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-              <div className="w-16 h-16 bg-[#D4AF37] rounded-full flex items-center justify-center mx-auto mb-6">
-                <HiOutlineCheckCircle className="text-black text-2xl" />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-4">Attentive Care</h3>
-              <p className="text-gray-300">Personalized attention to detail ensuring each client receives the care they deserve.</p>
-            </div>
-            
-            <div className="text-center p-8 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-              <div className="w-16 h-16 bg-[#D4AF37] rounded-full flex items-center justify-center mx-auto mb-6">
-                <HiOutlineClock className="text-black text-2xl" />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-4">Flexible Hours</h3>
-              <p className="text-gray-300">Open until 10 PM to accommodate your busy schedule with convenient appointment times.</p>
-            </div>
-            
-            <div className="text-center p-8 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-              <div className="w-16 h-16 bg-[#D4AF37] rounded-full flex items-center justify-center mx-auto mb-6">
-                <HiOutlineStar className="text-black text-2xl" />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-4">4.4★ Rated</h3>
-              <p className="text-gray-300">Trusted by 397+ customers who consistently rate our services highly for quality and care.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Service Pricing CTA */}
-      <section className="py-24 bg-gradient-to-br from-[#F5E6D3] to-white">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-5xl font-light text-[#2C1810] mb-8">Transparent Pricing</h2>
-          <p className="text-xl text-gray-700 mb-8 leading-relaxed">
-            We always discuss pricing before beginning any service. Feel free to ask about costs for any treatment you're interested in.
-          </p>
-          <div className="bg-white rounded-3xl p-8 shadow-xl mb-12">
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <HiOutlineCheckCircle className="text-[#D4AF37] text-3xl" />
-              <span className="text-2xl font-semibold text-[#2C1810]">No Hidden Costs</span>
-            </div>
-            <p className="text-gray-600 mb-8">All pricing is explained upfront so you can make informed decisions about your beauty treatments.</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-[#D4AF37] text-black px-8 py-4 rounded-full font-semibold hover:bg-[#2C1810] hover:text-[#D4AF37] transition-all duration-300 transform hover:scale-105">
-                Get Price Quote
+          {/* Category Filter */}
+          <div className="flex flex-wrap justify-center gap-4 mb-16">
+            {serviceCategories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`flex items-center px-6 py-3 rounded-2xl font-medium transition-all duration-300 ${
+                  selectedCategory === category.id
+                    ? 'bg-[#D4A574] text-black'
+                    : 'bg-gray-100 text-gray-700 hover:bg-[#F5E6D3]'
+                }`}
+              >
+                <category.icon className="w-5 h-5 mr-2" />
+                {category.name}
               </button>
-              <button className="border-2 border-[#D4AF37] text-[#D4AF37] px-8 py-4 rounded-full font-semibold hover:bg-[#D4AF37] hover:text-black transition-all duration-300">
-                Call: 096621 43430
-              </button>
-            </div>
+            ))}
+          </div>
+
+          {/* Services Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredServices.map((service, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 group hover:border-[#D4A574]/20"
+              >
+                {service.popular && (
+                  <div className="inline-flex items-center px-3 py-1 bg-[#D4A574] text-black text-sm font-medium rounded-full mb-4">
+                    <HiOutlineStar className="w-4 h-4 mr-1" />
+                    Popular
+                  </div>
+                )}
+                <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4 group-hover:text-[#D4A574] transition-colors duration-300">
+                  {service.title}
+                </h3>
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  {service.description}
+                </p>
+                <div className="space-y-3 mb-6">
+                  {service.features.map((feature, featureIndex) => (
+                    <div key={featureIndex} className="flex items-center text-gray-700">
+                      <HiOutlineCheckCircle className="w-5 h-5 text-[#D4A574] mr-3 flex-shrink-0" />
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center justify-between pt-6 border-t border-gray-100">
+                  <span className="text-sm text-gray-500">Duration: {service.duration}</span>
+                  <button className="text-[#D4A574] font-medium hover:text-[#2C2C2C] transition-colors duration-300 flex items-center">
+                    Book Now
+                    <HiOutlineArrowRight className="w-4 h-4 ml-1" />
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Customer Testimonial */}
-      <section className="py-24 bg-white">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-light text-[#2C1810] mb-8">What Our Customers Say</h2>
-          </div>
-          
-          <div className="bg-gradient-to-br from-[#F5E6D3] to-white rounded-3xl p-12 shadow-xl">
-            <div className="flex items-center justify-center mb-6">
-              <div className="flex gap-1">
-                {[1,2,3,4,5].map((star) => (
-                  <HiOutlineStar key={star} className="text-[#D4AF37] text-2xl fill-current" />
+      {/* Treatment Process */}
+      <section className="py-32 bg-gradient-to-br from-[#2C2C2C] to-gray-800">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-5xl font-bold text-white mb-8">
+                Our Beauty
+                <span className="block text-[#D4A574]">Treatment Process</span>
+              </h2>
+              <p className="text-xl text-gray-300 mb-12 leading-relaxed">
+                Every treatment at Amarr Salon follows our proven process to ensure you receive the best possible results with personalized attention.
+              </p>
+              <div className="space-y-8">
+                {treatmentSteps.map((step, index) => (
+                  <div key={index} className="flex items-start group">
+                    <div className="flex-shrink-0 w-12 h-12 bg-[#D4A574] rounded-2xl flex items-center justify-center text-black font-bold text-lg mr-6">
+                      {step.step}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#D4A574] transition-colors duration-300">
+                        {step.title}
+                      </h3>
+                      <p className="text-gray-400 leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
-            <blockquote className="text-2xl text-[#2C1810] text-center mb-8 italic leading-relaxed">
-              "Had a lovely pedicure experience at the salon. Thanks to Bhoomi, she did an amazing job very gentle, professional, and attentive. Truly enjoyed the service."
-            </blockquote>
-            <div className="text-center">
-              <div className="font-semibold text-[#2C1810] text-lg">Barkha Shekhawat</div>
-              <div className="text-gray-600">Verified Customer</div>
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#D4A574]/20 to-[#F5E6D3]/20 rounded-3xl transform rotate-3"></div>
+              <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl overflow-hidden">
+                <Image
+                  src="/images/business-8.jpg"
+                  alt="Beauty treatment process"
+                  width={600}
+                  height={700}
+                  className="object-cover w-full h-full"
+                  unoptimized
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-24 bg-[#2C1810]">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-5xl font-light text-white mb-8">Ready for Your Beauty Transformation?</h2>
-          <p className="text-xl text-gray-300 mb-12 leading-relaxed">
-            Experience the gentle, professional, and attentive service that has earned us a 4.4★ rating from 397+ satisfied customers.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <button className="bg-[#D4AF37] text-black px-10 py-5 rounded-full font-semibold text-lg hover:bg-white hover:text-[#2C1810] transition-all duration-300 transform hover:scale-105">
-              Book Your Appointment Today
-            </button>
-            <button className="border-2 border-[#D4AF37] text-[#D4AF37] px-10 py-5 rounded-full font-semibold text-lg hover:bg-[#D4AF37] hover:text-black transition-all duration-300">
-              Call Now: 096621 43430
-            </button>
+      {/* Why Choose Us */}
+      <section className="py-32 bg-[#F5E6D3]/10">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl font-bold text-[#2C2C2C] mb-6">
+              Why Choose Amarr Salon?
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              We combine traditional beauty wisdom with modern techniques to deliver exceptional results in a welcoming environment
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {whyChooseUs.map((reason, index) => (
+              <div
+                key={index}
+                className="text-center group hover:transform hover:scale-105 transition-all duration-300"
+              >
+                <div className="w-20 h-20 bg-gradient-to-br from-[#D4A574] to-[#F5E6D3] rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:shadow-2xl group-hover:shadow-[#D4A574]/20 transition-all duration-300">
+                  <reason.icon className="w-8 h-8 text-[#2C2C2C]" />
+                </div>
+                <h3 className="text-xl font-bold text-[#2C2C2C] mb-4">
+                  {reason.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {reason.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Trust Indicators */}
+          <div className="mt-20 bg-white rounded-3xl p-8 lg:p-12 shadow-lg">
+            <div className="grid md:grid-cols-3 gap-8 text-center">
+              <div>
+                <div className="text-4xl font-bold text-[#D4A574] mb-2">4.4/5</div>
+                <div className="flex justify-center mb-2">
+                  {[1,2,3,4,5].map((star) => (
+                    <HiOutlineStar key={star} className="w-5 h-5 text-[#D4A574] fill-current" />
+                  ))}
+                </div>
+                <p className="text-gray-600">From 397+ satisfied customers</p>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-[#D4A574] mb-2">10 PM</div>
+                <p className="text-gray-600">Extended hours daily for your convenience</p>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-[#D4A574] mb-2">MG Road</div>
+                <p className="text-gray-600">Prime location near MALBAR HILLS</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Service Showcase */}
+      <section className="py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <h2 className="text-4xl font-bold text-[#2C2C2C] mb-8">
+                Experience Professional Beauty Care
+              </h2>
+              <div className="grid sm:grid-cols-2 gap-6">
+                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-800 to-gray-900 aspect-square">
+                  <Image
+                    src="/images/business-4.jpg"
+                    alt="Hair styling services"
+                    fill
+                    className="object-cover hover:scale-110 transition-transform duration-700"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-white mb-2">Hair Styling</h3>
+                      <p className="text-gray-300">Professional cuts and styling</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-800 to-gray-900 aspect-square">
+                  <Image
+                    src="/images/business-6.jpg"
+                    alt="Skin care treatments"
+                    fill
+                    className="object-cover hover:scale-110 transition-transform duration-700"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-white mb-2">Skin Care</h3>
+                      <p className="text-gray-300">Rejuvenating facial treatments</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-gradient-to-br from-[#2C2C2C] to-gray-800 rounded-3xl p-8 text-white flex flex-col justify-center">
+              <HiOutlineSparkles className="w-12 h-12 text-[#D4A574] mb-6" />
+              <h3 className="text-2xl font-bold mb-4">Ready to Book?</h3>
+              <p className="text-gray-300 mb-8 leading-relaxed">
+                Schedule your appointment today and experience professional beauty services in Nikol's most convenient location.
+              </p>
+              <button className="bg-[#D4A574] text-black px-6 py-3 rounded-2xl font-semibold hover:bg-[#F5E6D3] transition-all duration-300 flex items-center justify-center">
+                Book Now
+                <HiOutlineChevronRight className="w-5 h-5 ml-2" />
+              </button>
+            </div>
           </div>
         </div>
       </section>

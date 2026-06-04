@@ -2,482 +2,435 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { HiOutlineCalendar, HiOutlineClock, HiOutlineUser, HiOutlinePhone, HiOutlineEnvelope, HiOutlineCheckCircle, HiOutlineSparkles, HiOutlineHeart, HiOutlineArrowRight } from 'react-icons/hi2'
+import { HiOutlineClock, HiOutlineCheckCircle, HiOutlineArrowRight, HiOutlinePhone, HiOutlineSparkles, HiOutlineHeart } from 'react-icons/hi2'
 
 export default function BookingPage() {
-  const [selectedService, setSelectedService] = useState('')
-  const [selectedStylist, setSelectedStylist] = useState('')
+  const [selectedService, setSelectedService] = useState(null)
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
-  const [step, setStep] = useState(1)
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
-    notes: ''
+    specialRequests: ''
   })
 
   const services = [
-    { id: 'pedicure', name: 'Pedicure', duration: '45 min', price: '₹800' },
-    { id: 'cleanup', name: 'Cleanup (Mini Facial)', duration: '30 min', price: '₹600' },
-    { id: 'facial', name: 'Full Facial', duration: '60 min', price: '₹1200' },
-    { id: 'manicure', name: 'Manicure', duration: '30 min', price: '₹600' },
-    { id: 'haircut', name: 'Hair Cut & Style', duration: '45 min', price: '₹900' },
-    { id: 'combo', name: 'Pedicure + Cleanup', duration: '75 min', price: '₹1300' }
-  ]
-
-  const stylists = [
-    { id: 'bhoomi', name: 'Bhoomi', specialty: 'Pedicure Specialist', rating: 4.9 },
-    { id: 'priya', name: 'Priya', specialty: 'Facial Expert', rating: 4.8 },
-    { id: 'meera', name: 'Meera', specialty: 'Hair Stylist', rating: 4.7 },
-    { id: 'any', name: 'Any Available', specialty: 'First Available Expert', rating: 4.4 }
+    {
+      id: 1,
+      name: 'Hair Cut & Style',
+      duration: '45 mins',
+      price: '₹500-800',
+      image: '/images/business-3.jpg',
+      popular: true
+    },
+    {
+      id: 2,
+      name: 'Hair Coloring',
+      duration: '2 hours',
+      price: '₹1500-3000',
+      image: '/images/business-4.jpg',
+      popular: false
+    },
+    {
+      id: 3,
+      name: 'Facial Treatment',
+      duration: '60 mins',
+      price: '₹800-1200',
+      image: '/images/business-5.jpg',
+      popular: true
+    },
+    {
+      id: 4,
+      name: 'Bridal Package',
+      duration: '4 hours',
+      price: '₹5000-8000',
+      image: '/images/business-6.jpg',
+      popular: false
+    },
+    {
+      id: 5,
+      name: 'Hair Spa',
+      duration: '90 mins',
+      price: '₹1000-1500',
+      image: '/images/business-7.jpg',
+      popular: true
+    },
+    {
+      id: 6,
+      name: 'Eyebrow Threading',
+      duration: '20 mins',
+      price: '₹200-300',
+      image: '/images/business-8.jpg',
+      popular: false
+    }
   ]
 
   const timeSlots = [
-    '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
-    '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM',
-    '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM',
-    '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM',
-    '6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM',
-    '8:00 PM', '8:30 PM', '9:00 PM', '9:30 PM'
+    '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM',
+    '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM',
+    '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM',
+    '9:00 PM'
   ]
 
-  const handleFormChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
+  const generateDates = () => {
+    const dates = []
+    const today = new Date()
+    for (let i = 0; i < 14; i++) {
+      const date = new Date(today)
+      date.setDate(today.getDate() + i)
+      dates.push({
+        value: date.toISOString().split('T')[0],
+        label: date.toLocaleDateString('en-US', { 
+          weekday: 'short',
+          month: 'short',
+          day: 'numeric'
+        }),
+        fullDate: date.toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })
+      })
+    }
+    return dates
   }
 
-  const nextStep = () => {
-    if (step < 4) setStep(step + 1)
-  }
-
-  const prevStep = () => {
-    if (step > 1) setStep(step - 1)
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Handle booking submission
-    alert('Booking request submitted! We will call you to confirm.')
+    // Handle form submission
+    console.log('Booking submitted:', {
+      service: selectedService,
+      date: selectedDate,
+      time: selectedTime,
+      ...formData
+    })
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <main className="pt-16 lg:pt-20">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#2C1810] to-gray-800 py-24 lg:py-32">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900">
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#2C2C2C] to-gray-800">
           <Image
-            src="/images/business-3.jpg"
-            alt="Salon booking"
+            src="/images/business-1.jpg"
+            alt="Amarr Salon Booking"
             fill
-            className="object-cover opacity-20"
+            className="object-cover opacity-30"
             unoptimized
           />
         </div>
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-6 flex justify-center">
-              <div className="rounded-full bg-[#D4AF37]/20 p-4">
-                <HiOutlineSparkles className="h-8 w-8 text-[#D4AF37]" />
-              </div>
-            </div>
-            <h1 className="text-5xl lg:text-7xl font-bold text-white mb-8 leading-tight">
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="backdrop-blur-sm bg-black/20 rounded-3xl p-12 border border-[#D4A574]/20">
+            <h1 className="text-5xl lg:text-7xl font-bold text-white mb-6">
               Book Your
-              <span className="block text-[#D4AF37] italic">Transformation</span>
+              <span className="block text-[#D4A574]">Beauty Session</span>
             </h1>
-            <p className="text-xl lg:text-2xl text-gray-300 mb-12 leading-relaxed">
-              Schedule your appointment with Nikol's most trusted beauty professionals. 
-              Experience gentle, attentive service that leaves you glowing.
+            <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+              Select your desired service and preferred time. We're open until 10 PM daily to fit your schedule.
             </p>
-            <div className="flex flex-wrap justify-center gap-8 text-white">
+            <div className="flex items-center justify-center gap-6 text-[#D4A574]">
               <div className="flex items-center gap-2">
-                <HiOutlineCheckCircle className="h-5 w-5 text-[#D4AF37]" />
-                <span>4.4★ Rated Excellence</span>
+                <HiOutlineClock className="w-6 h-6" />
+                <span className="text-lg">Open Until 10 PM</span>
               </div>
               <div className="flex items-center gap-2">
-                <HiOutlineClock className="h-5 w-5 text-[#D4AF37]" />
-                <span>Open Until 10 PM</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <HiOutlineHeart className="h-5 w-5 text-[#D4AF37]" />
-                <span>Gentle Professional Care</span>
+                <HiOutlineCheckCircle className="w-6 h-6" />
+                <span className="text-lg">Instant Confirmation</span>
               </div>
             </div>
           </div>
         </div>
+        
+        <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white to-transparent"></div>
       </section>
 
-      {/* Booking Progress */}
-      <section className="bg-gray-50 py-12 lg:py-16">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8">
-          <div className="flex justify-between items-center mb-12">
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="flex items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${
-                  step >= num ? 'bg-[#D4AF37] text-black' : 'bg-gray-300 text-gray-600'
-                }`}>
-                  {num}
-                </div>
-                {num < 4 && (
-                  <div className={`w-16 lg:w-24 h-0.5 mx-2 transition-all ${
-                    step > num ? 'bg-[#D4AF37]' : 'bg-gray-300'
-                  }`} />
+      {/* Service Selection */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#2C2C2C] mb-6">
+              Choose Your Service
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Select from our professional beauty services designed to enhance your natural beauty
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service) => (
+              <div
+                key={service.id}
+                onClick={() => setSelectedService(service)}
+                className={`relative group cursor-pointer rounded-2xl overflow-hidden transition-all duration-300 transform hover:scale-105 ${
+                  selectedService?.id === service.id 
+                    ? 'ring-4 ring-[#D4A574] shadow-2xl' 
+                    : 'shadow-lg hover:shadow-2xl'
+                }`}
+              >
+                {service.popular && (
+                  <div className="absolute top-4 left-4 z-20 bg-[#D4A574] text-black px-3 py-1 rounded-full text-sm font-semibold">
+                    Popular
+                  </div>
                 )}
+                
+                <div className="relative h-48 bg-gradient-to-br from-gray-800 to-gray-900">
+                  <Image
+                    src={service.image}
+                    alt={service.name}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300"></div>
+                </div>
+                
+                <div className="p-6 bg-white">
+                  <h3 className="text-xl font-bold text-[#2C2C2C] mb-2">{service.name}</h3>
+                  <div className="flex items-center justify-between text-gray-600 mb-4">
+                    <span className="flex items-center gap-1">
+                      <HiOutlineClock className="w-4 h-4" />
+                      {service.duration}
+                    </span>
+                    <span className="font-semibold text-[#D4A574]">{service.price}</span>
+                  </div>
+                  
+                  {selectedService?.id === service.id && (
+                    <div className="flex items-center gap-2 text-[#D4A574] font-semibold">
+                      <HiOutlineCheckCircle className="w-5 h-5" />
+                      <span>Selected</span>
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>
-
-          <div className="text-center mb-8">
-            <h2 className="text-2xl lg:text-3xl font-bold text-[#2C1810] mb-4">
-              {step === 1 && "Choose Your Service"}
-              {step === 2 && "Select Your Stylist"}
-              {step === 3 && "Pick Date & Time"}
-              {step === 4 && "Your Details"}
-            </h2>
-            <p className="text-gray-600">
-              {step === 1 && "Select from our range of professional beauty treatments"}
-              {step === 2 && "Choose your preferred expert or any available stylist"}
-              {step === 3 && "Find the perfect time that works for your schedule"}
-              {step === 4 && "Tell us how to reach you for confirmation"}
-            </p>
-          </div>
         </div>
       </section>
+
+      {/* Date & Time Selection */}
+      {selectedService && (
+        <section className="py-24 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl lg:text-5xl font-bold text-[#2C2C2C] mb-6">
+                Pick Your Perfect Time
+              </h2>
+              <p className="text-xl text-gray-600">
+                Choose your preferred date and time slot
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-16">
+              {/* Date Selection */}
+              <div>
+                <h3 className="text-2xl font-bold text-[#2C2C2C] mb-8">Select Date</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {generateDates().map((date) => (
+                    <button
+                      key={date.value}
+                      onClick={() => setSelectedDate(date.value)}
+                      className={`p-4 rounded-xl text-left transition-all duration-300 ${
+                        selectedDate === date.value
+                          ? 'bg-[#D4A574] text-black shadow-lg'
+                          : 'bg-white hover:bg-[#F5E6D3] text-gray-700 hover:text-[#2C2C2C]'
+                      }`}
+                    >
+                      <div className="font-semibold">{date.label}</div>
+                      <div className="text-sm opacity-80">{date.fullDate}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Time Selection */}
+              <div>
+                <h3 className="text-2xl font-bold text-[#2C2C2C] mb-8">Select Time</h3>
+                <div className="grid grid-cols-3 gap-3">
+                  {timeSlots.map((time) => (
+                    <button
+                      key={time}
+                      onClick={() => setSelectedTime(time)}
+                      className={`p-3 rounded-lg font-semibold text-center transition-all duration-300 ${
+                        selectedTime === time
+                          ? 'bg-[#D4A574] text-black shadow-lg'
+                          : 'bg-white hover:bg-[#F5E6D3] text-gray-700 hover:text-[#2C2C2C]'
+                      }`}
+                    >
+                      {time}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Booking Form */}
-      <section className="py-16 lg:py-24">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8">
-          <form onSubmit={handleSubmit} className="space-y-12">
-            
-            {/* Step 1: Service Selection */}
-            {step === 1 && (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {services.map((service) => (
-                  <div
-                    key={service.id}
-                    className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all hover:shadow-xl ${
-                      selectedService === service.id 
-                        ? 'border-[#D4AF37] bg-[#F5E6D3] shadow-lg' 
-                        : 'border-gray-200 bg-white hover:border-[#D4AF37]/50'
-                    }`}
-                    onClick={() => setSelectedService(service.id)}
-                  >
-                    <div className="text-center">
-                      <h3 className="text-xl font-semibold text-[#2C1810] mb-2">
-                        {service.name}
-                      </h3>
-                      <p className="text-gray-600 mb-4">{service.duration}</p>
-                      <div className="text-2xl font-bold text-[#D4AF37]">
-                        {service.price}
-                      </div>
-                    </div>
-                    {selectedService === service.id && (
-                      <div className="absolute top-4 right-4">
-                        <HiOutlineCheckCircle className="h-6 w-6 text-[#D4AF37]" />
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Step 2: Stylist Selection */}
-            {step === 2 && (
-              <div className="grid md:grid-cols-2 gap-6">
-                {stylists.map((stylist) => (
-                  <div
-                    key={stylist.id}
-                    className={`relative p-8 rounded-2xl border-2 cursor-pointer transition-all hover:shadow-xl ${
-                      selectedStylist === stylist.id 
-                        ? 'border-[#D4AF37] bg-[#F5E6D3] shadow-lg' 
-                        : 'border-gray-200 bg-white hover:border-[#D4AF37]/50'
-                    }`}
-                    onClick={() => setSelectedStylist(stylist.id)}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#D4AF37] to-yellow-600 flex items-center justify-center">
-                        <HiOutlineUser className="h-8 w-8 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-semibold text-[#2C1810] mb-1">
-                          {stylist.name}
-                        </h3>
-                        <p className="text-gray-600 mb-2">{stylist.specialty}</p>
-                        <div className="flex items-center gap-1">
-                          <span className="text-[#D4AF37]">★</span>
-                          <span className="text-sm font-semibold">{stylist.rating}</span>
-                        </div>
-                      </div>
-                    </div>
-                    {selectedStylist === stylist.id && (
-                      <div className="absolute top-4 right-4">
-                        <HiOutlineCheckCircle className="h-6 w-6 text-[#D4AF37]" />
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Step 3: Date & Time Selection */}
-            {step === 3 && (
-              <div className="space-y-8">
-                <div>
-                  <label className="block text-lg font-semibold text-[#2C1810] mb-4">
-                    Select Date
-                  </label>
-                  <input
-                    type="date"
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                    min={new Date().toISOString().split('T')[0]}
-                    className="w-full p-4 border-2 border-gray-300 rounded-xl focus:border-[#D4AF37] focus:outline-none text-lg"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-lg font-semibold text-[#2C1810] mb-4">
-                    Select Time
-                  </label>
-                  <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                    {timeSlots.map((time) => (
-                      <button
-                        key={time}
-                        type="button"
-                        className={`p-3 rounded-xl border-2 text-sm font-medium transition-all ${
-                          selectedTime === time
-                            ? 'border-[#D4AF37] bg-[#D4AF37] text-white'
-                            : 'border-gray-300 bg-white text-gray-700 hover:border-[#D4AF37] hover:bg-[#F5E6D3]'
-                        }`}
-                        onClick={() => setSelectedTime(time)}
-                      >
-                        {time}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Step 4: Contact Details */}
-            {step === 4 && (
-              <div className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-semibold text-[#2C1810] mb-2">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.name}
-                      onChange={(e) => handleFormChange('name', e.target.value)}
-                      className="w-full p-4 border-2 border-gray-300 rounded-xl focus:border-[#D4AF37] focus:outline-none"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-[#2C1810] mb-2">
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => handleFormChange('phone', e.target.value)}
-                      className="w-full p-4 border-2 border-gray-300 rounded-xl focus:border-[#D4AF37] focus:outline-none"
-                      required
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold text-[#2C1810] mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleFormChange('email', e.target.value)}
-                    className="w-full p-4 border-2 border-gray-300 rounded-xl focus:border-[#D4AF37] focus:outline-none"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold text-[#2C1810] mb-2">
-                    Special Requests or Notes
-                  </label>
-                  <textarea
-                    rows={4}
-                    value={formData.notes}
-                    onChange={(e) => handleFormChange('notes', e.target.value)}
-                    className="w-full p-4 border-2 border-gray-300 rounded-xl focus:border-[#D4AF37] focus:outline-none"
-                    placeholder="Any specific preferences or requirements..."
-                  />
-                </div>
-
-                {/* Booking Summary */}
-                <div className="bg-[#F5E6D3] p-8 rounded-2xl">
-                  <h3 className="text-xl font-semibold text-[#2C1810] mb-4">
-                    Booking Summary
-                  </h3>
-                  <div className="space-y-2 text-gray-700">
-                    <p><span className="font-semibold">Service:</span> {services.find(s => s.id === selectedService)?.name}</p>
-                    <p><span className="font-semibold">Stylist:</span> {stylists.find(s => s.id === selectedStylist)?.name}</p>
-                    <p><span className="font-semibold">Date:</span> {selectedDate}</p>
-                    <p><span className="font-semibold">Time:</span> {selectedTime}</p>
-                    <p><span className="font-semibold">Duration:</span> {services.find(s => s.id === selectedService)?.duration}</p>
-                    <div className="pt-2 border-t border-[#D4AF37]/20">
-                      <p className="text-xl font-bold text-[#2C1810]">
-                        Total: {services.find(s => s.id === selectedService)?.price}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Navigation Buttons */}
-            <div className="flex justify-between items-center pt-8 border-t border-gray-200">
-              <button
-                type="button"
-                onClick={prevStep}
-                disabled={step === 1}
-                className={`px-8 py-4 rounded-xl font-semibold transition-all ${
-                  step === 1 
-                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-                    : 'bg-white border-2 border-[#D4AF37] text-[#D4AF37] hover:bg-[#F5E6D3]'
-                }`}
-              >
-                Previous
-              </button>
-              
-              {step < 4 ? (
-                <button
-                  type="button"
-                  onClick={nextStep}
-                  disabled={
-                    (step === 1 && !selectedService) ||
-                    (step === 2 && !selectedStylist) ||
-                    (step === 3 && (!selectedDate || !selectedTime))
-                  }
-                  className="px-8 py-4 bg-[#D4AF37] text-black rounded-xl font-semibold hover:bg-yellow-600 transition-all disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed flex items-center gap-2"
-                >
-                  Next Step
-                  <HiOutlineArrowRight className="h-5 w-5" />
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={!formData.name || !formData.phone}
-                  className="px-8 py-4 bg-[#D4AF37] text-black rounded-xl font-semibold hover:bg-yellow-600 transition-all disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed flex items-center gap-2"
-                >
-                  Confirm Booking
-                  <HiOutlineCheckCircle className="h-5 w-5" />
-                </button>
-              )}
-            </div>
-          </form>
-        </div>
-      </section>
-
-      {/* Trust Section */}
-      <section className="bg-[#F5E6D3] py-16 lg:py-24">
-        <div className="mx-auto max-w-6xl px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-[#2C1810] mb-6">
-                Why Book With Us?
+      {selectedService && selectedDate && selectedTime && (
+        <section className="py-24 bg-white">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl lg:text-5xl font-bold text-[#2C2C2C] mb-6">
+                Complete Your Booking
               </h2>
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#D4AF37] flex items-center justify-center flex-shrink-0">
-                    <HiOutlineCheckCircle className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#2C1810] mb-2">
-                      Gentle Professional Care
-                    </h3>
-                    <p className="text-gray-700">
-                      Our experienced team provides attentive, personalized service that our customers love.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#D4AF37] flex items-center justify-center flex-shrink-0">
-                    <HiOutlineSparkles className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#2C1810] mb-2">
-                      Transparent Pricing
-                    </h3>
-                    <p className="text-gray-700">
-                      We always discuss pricing before starting any treatment. No surprises, just honest service.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#D4AF37] flex items-center justify-center flex-shrink-0">
-                    <HiOutlineClock className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#2C1810] mb-2">
-                      Flexible Hours
-                    </h3>
-                    <p className="text-gray-700">
-                      Open until 10 PM to accommodate your busy schedule. Book when it's convenient for you.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <p className="text-xl text-gray-600">
+                Just a few more details and you're all set!
+              </p>
             </div>
-            
-            <div className="relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl">
-              <Image
-                src="/images/business-5.jpg"
-                alt="Salon interior"
-                width={600}
-                height={400}
-                className="w-full h-96 object-cover"
-                unoptimized
-              />
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Contact Info */}
-      <section className="bg-[#2C1810] py-16 lg:py-24">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-8">
-            Need Help with Your Booking?
-          </h2>
-          <p className="text-xl text-gray-300 mb-12">
-            Our friendly team is here to assist you with any questions or special requests.
-          </p>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            <a
-              href="tel:09662143430"
-              className="flex items-center justify-center gap-4 bg-[#D4AF37] text-black p-6 rounded-2xl hover:bg-yellow-600 transition-all group"
-            >
-              <HiOutlinePhone className="h-6 w-6 group-hover:rotate-12 transition-transform" />
-              <div className="text-left">
-                <div className="text-sm font-medium">Call Now</div>
-                <div className="text-lg font-bold">096621 43430</div>
+            <div className="grid lg:grid-cols-3 gap-12">
+              {/* Booking Summary */}
+              <div className="lg:col-span-1">
+                <div className="bg-gray-50 rounded-2xl p-8 sticky top-24">
+                  <h3 className="text-2xl font-bold text-[#2C2C2C] mb-6">Booking Summary</h3>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <HiOutlineSparkles className="w-6 h-6 text-[#D4A574]" />
+                      <div>
+                        <div className="font-semibold text-[#2C2C2C]">{selectedService.name}</div>
+                        <div className="text-gray-600">{selectedService.duration}</div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-3">
+                      <HiOutlineClock className="w-6 h-6 text-[#D4A574]" />
+                      <div>
+                        <div className="font-semibold text-[#2C2C2C]">
+                          {generateDates().find(d => d.value === selectedDate)?.fullDate}
+                        </div>
+                        <div className="text-gray-600">{selectedTime}</div>
+                      </div>
+                    </div>
+                    
+                    <div className="border-t pt-4 mt-6">
+                      <div className="flex justify-between items-center">
+                        <span className="text-lg font-semibold text-[#2C2C2C]">Price Range</span>
+                        <span className="text-xl font-bold text-[#D4A574]">{selectedService.price}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </a>
+
+              {/* Contact Form */}
+              <div className="lg:col-span-2">
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-lg font-semibold text-[#2C2C2C] mb-3">
+                        Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#D4A574] focus:ring-2 focus:ring-[#D4A574]/20 outline-none transition-all"
+                        placeholder="Enter your full name"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-lg font-semibold text-[#2C2C2C] mb-3">
+                        Phone Number *
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#D4A574] focus:ring-2 focus:ring-[#D4A574]/20 outline-none transition-all"
+                        placeholder="Your contact number"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-lg font-semibold text-[#2C2C2C] mb-3">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#D4A574] focus:ring-2 focus:ring-[#D4A574]/20 outline-none transition-all"
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-lg font-semibold text-[#2C2C2C] mb-3">
+                      Special Requests
+                    </label>
+                    <textarea
+                      name="specialRequests"
+                      value={formData.specialRequests}
+                      onChange={handleInputChange}
+                      rows={4}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-[#D4A574] focus:ring-2 focus:ring-[#D4A574]/20 outline-none transition-all resize-none"
+                      placeholder="Any specific requirements or preferences..."
+                    ></textarea>
+                  </div>
+                  
+                  <div className="pt-8">
+                    <button
+                      type="submit"
+                      className="w-full bg-[#D4A574] hover:bg-[#F5E6D3] text-black font-bold py-4 px-8 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 text-lg shadow-lg hover:shadow-xl transform hover:scale-105"
+                    >
+                      <HiOutlineHeart className="w-6 h-6" />
+                      Confirm Your Booking
+                      <HiOutlineArrowRight className="w-6 h-6" />
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Quick Contact */}
+      <section className="py-24 bg-[#2C2C2C]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
+              Need Help Booking?
+            </h2>
+            <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto">
+              Our team is ready to assist you with your appointment. Call us directly for immediate booking or any questions.
+            </p>
             
-            <div className="flex items-center justify-center gap-4 bg-white/10 text-white p-6 rounded-2xl">
-              <HiOutlineClock className="h-6 w-6 text-[#D4AF37]" />
-              <div className="text-left">
-                <div className="text-sm font-medium">Open Daily</div>
-                <div className="text-lg font-bold">Until 10:00 PM</div>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              <a
+                href="tel:09662143430"
+                className="bg-[#D4A574] hover:bg-[#F5E6D3] text-black font-bold py-4 px-8 rounded-xl transition-all duration-300 flex items-center gap-3 text-lg shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
+                <HiOutlinePhone className="w-6 h-6" />
+                Call Now: 096621 43430
+              </a>
+              
+              <div className="text-gray-300 text-lg">
+                Open Daily Until 10 PM
               </div>
             </div>
           </div>
         </div>
       </section>
-    </div>
+    </main>
   )
 }
